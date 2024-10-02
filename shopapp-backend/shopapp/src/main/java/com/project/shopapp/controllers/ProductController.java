@@ -170,8 +170,8 @@ public class ProductController {
         }
     }
 
-//    @PostMapping("/generateFakeProducts")
-    private ResponseEntity<String> generateFakeProducts(){
+    @PostMapping("/generateFakeProducts")
+    public ResponseEntity<String> generateFakeProducts(){
 
         Faker faker=new Faker();
         for(int i=0;i< 1_000_000;i++){
@@ -182,7 +182,7 @@ public class ProductController {
                     .price((float)faker.number().numberBetween(10,90_00))
                     .description(faker.lorem().sentence())
                     .thumbnail("")
-                    .categoryId((long)faker.number().numberBetween(2,5))
+                    .categoryId((long)faker.number().numberBetween(1,3))
                     .build();
             try {
                 productService.createProduct(productDTO );

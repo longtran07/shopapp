@@ -3,7 +3,12 @@ package com.project.shopapp.controllers;
 import com.project.shopapp.dtos.UserDTO;
 import com.project.shopapp.dtos.UserLoginDTO;
 import com.project.shopapp.exceptions.DataNotFoundException;
+import com.project.shopapp.models.User;
+import com.project.shopapp.responses.LoginResponse;
+import com.project.shopapp.responses.RegisterResponse;
 import com.project.shopapp.services.IUserService;
+import com.project.shopapp.components.LocalizationUtils;
+import com.project.shopapp.utils.MessageKeys;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -15,51 +20,70 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Map;
 
 @RestController
 @RequestMapping("${api.prefix}/users")
 @RequiredArgsConstructor
 public class UserController {
     private final IUserService userService;
-
+    private final LocalizationUtils localizationUtils;
     @PostMapping("/register")
-    public ResponseEntity <?> createUser(
+    public ResponseEntity <RegisterResponse> createUser(
             @Valid @RequestBody UserDTO userDTO,
             BindingResult result
     ){
         try {
-            if(result.hasErrors()){
+            if(result.hasErrors()) {
                 List<String> errorMessages = result.getFieldErrors()
                         .stream()
                         .map(FieldError::getDefaultMessage)
                         .toList();
-                return ResponseEntity.badRequest().body(errorMessages);
+                return ResponseEntity.badRequest().body(
+                        RegisterResponse
+                        .builder()
+                        .message(localizationUtils.getLocalizedMessage(String.valueOf(errorMessages)))
+                        .build());
             }
-            if(!userDTO.getPassword().equals(userDTO.getRetypePassword())){
-                return ResponseEntity.badRequest().body("Password does note match");
+            if(!userDTO.getPassword().equals(userDTO.getRetypePassword())) {
+                return ResponseEntity.badRequest().body(RegisterResponse
+                        .builder()
+                        .message(localizationUtils.getLocalizedMessage(MessageKeys.PASSWORD_NOT_MATCH))
+                        .build());
             }
-            userService.creaetUser(userDTO);
-            return ResponseEntity.ok("Register successfully");
+            User user=userService.createUser(userDTO);
+            // Trả về JSON thay vì chuỗi văn bản
+            return ResponseEntity.ok(
+                    RegisterResponse
+                    .builder()
+                    .build());
 
-        }
-        catch (Exception e){
-            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(RegisterResponse.builder().message(e.getMessage()).build());
         }
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login (
-            @Valid @RequestBody UserLoginDTO userLoginDTO) throws Exception {
-        // Kiểm tra thông tin đăng nhập và sinh token
+    public ResponseEntity<LoginResponse> login(
+            @Valid @RequestBody UserLoginDTO userLoginDTO
+    ) {
         try {
-            String token=userService.login(userLoginDTO.getPhoneNumber(),userLoginDTO.getPassword());
+            // Sinh token
+            String token = userService.login(userLoginDTO.getPhoneNumber(), userLoginDTO.getPassword());
+
             // Trả về token trong response
-            return ResponseEntity.ok().body(token);
-        } catch (DataNotFoundException e) {
-           return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.ok().body(
+                    LoginResponse.builder()
+                            .message(localizationUtils.getLocalizedMessage(MessageKeys.LOGIN_SUCCESSFULLY))
+                            .token(token) // Thêm token vào phản hồi
+                            .build()
+            );
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(
+                    LoginResponse.builder()
+                            .message(localizationUtils.getLocalizedMessage(MessageKeys.LOGIN_FAILED,e.getMessage()))
+                            .build()
+            );
         }
-
-
     }
 }

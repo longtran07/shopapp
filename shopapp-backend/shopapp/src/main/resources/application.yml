@@ -1,6 +1,10 @@
 server:
   port: 8088
 spring:
+  messages:
+    encoding: UTF-8
+    basename: i18n/messages
+    default-locate : en
   datasource:
     url: jdbc:mysql://localhost:3306/shopapp?useSSL=false&serverTimezone=UTC
     driver-class-name: com.mysql.cj.jdbc.Driver

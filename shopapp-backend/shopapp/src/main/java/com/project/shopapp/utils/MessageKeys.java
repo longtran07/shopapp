@@ -13,5 +13,9 @@ public class MessageKeys {
     public static final String ERROR_MAXIMUM_IMAGE ="product.upload_images.error_max_5_images";
     public static final String FILE_LARGE ="product.upload_images.file_large";
     public static final String FILE_MUST_BE_IMAGE ="product.upload_images.file_must_be_image";
+    public static final String WRONG_PHONE_PASSWORD = "user.login.wrong_phone_password";
+    public static final String ROLE_DOES_NOT_EXISTS = "user.login.role_not_exist";
+
+    public static final String USER_IS_LOCKED = "user.login.user_is_locked";
 
 }

@@ -8,6 +8,7 @@ import lombok.*;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Getter
@@ -20,7 +21,7 @@ public class OrderDTO {
     @Min(value = 1 , message = "User's ID must be > 0 ")
     private Long userId;
 
-    @JsonProperty("full_name")
+    @JsonProperty("fullname")
     private String fullName;
 
     private String email;
@@ -49,4 +50,7 @@ public class OrderDTO {
 
     @JsonProperty("payment_method")
     private String paymentMethod;
+
+    @JsonProperty("cart_items")
+    private List<CartItemDTO> cartItems;
 }

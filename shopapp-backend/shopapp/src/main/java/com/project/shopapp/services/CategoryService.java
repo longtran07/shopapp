@@ -6,6 +6,7 @@ import com.project.shopapp.repositories.CategoryRepository;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
@@ -15,6 +16,7 @@ import java.util.List;
 public class CategoryService implements ICategoryService{
     private final CategoryRepository categoryRepository;
     @Override
+    @Transactional
     public Category createCategory(CategoryDTO categoryDTO) {
         Category newCategory=Category
                 .builder()
@@ -35,6 +37,7 @@ public class CategoryService implements ICategoryService{
     }
 
     @Override
+    @Transactional
     public Category updateCategory(long categoryId,
                                     CategoryDTO categoryDTO) {
         Category existingCategory = getCategoryById(categoryId);
@@ -44,6 +47,7 @@ public class CategoryService implements ICategoryService{
     }
 
     @Override
+    @Transactional
     public void deleteCategory(long id) {
         // xoá cứng, xoá xong mất luôn
         categoryRepository.deleteById(id);

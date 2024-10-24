@@ -3,6 +3,7 @@ package com.project.shopapp.controllers;
 import com.project.shopapp.components.LocalizationUtils;
 import com.project.shopapp.dtos.CategoryDTO;
 import com.project.shopapp.models.Category;
+import com.project.shopapp.responses.CategoryResponse;
 import com.project.shopapp.responses.UpdateCategoryResponse;
 import com.project.shopapp.services.CategoryService;
 import com.project.shopapp.utils.MessageKeys;
@@ -36,16 +37,20 @@ public class CategoryController {
     public ResponseEntity<?> createCategory(
             @Valid  @RequestBody CategoryDTO categoryDTO,
             BindingResult result){
+        CategoryResponse categoryResponse=new CategoryResponse();
         if(result.hasErrors()){
             List <String> errorMessage=
                     result.getFieldErrors()
                             .stream()
                             .map(FieldError::getDefaultMessage)
                             .toList();
-            return ResponseEntity.badRequest().body(errorMessage);
+            categoryResponse.setMessage(localizationUtils.getLocalizedMessage(MessageKeys.CREATE_CATEGORY_FAILED));
+            categoryResponse.setErrors(errorMessage);
+            return ResponseEntity.badRequest().body(categoryResponse);
         }
-        categoryService.createCategory(categoryDTO);
-        return ResponseEntity.ok(localizationUtils.getLocalizedMessage(MessageKeys.CREATE_CATEGORY_SUCCESSFULLY));
+        Category category=categoryService.createCategory(categoryDTO);
+        categoryResponse.setCategory(category);
+        return ResponseEntity.ok(categoryResponse);
     }
 
     @GetMapping("") // http://localhost:8088/api/v1/categories?page=1&limit=1

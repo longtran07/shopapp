@@ -12,6 +12,7 @@ import com.project.shopapp.services.IProductService;
 import com.project.shopapp.services.ProductService;
 import com.project.shopapp.utils.MessageKeys;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.UrlResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -29,12 +30,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("${api.prefix}/products")
@@ -106,6 +106,26 @@ public class ProductController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
+    @GetMapping("/images/{imageName}")
+    public ResponseEntity<?> viewImage(@PathVariable String imageName){
+        try{
+            Path imagePath=Paths.get("uploads/"+imageName);
+            UrlResource resource=new UrlResource(imagePath.toUri());
+
+            if(resource.exists()){
+                return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(resource);
+            }
+            else{
+                return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG)
+                        .body(new UrlResource(Paths.get("uploads/notfound.jpg").toUri()));
+            }
+        }
+        catch (Exception e){
+            return ResponseEntity.notFound().build();
+        }
+
+    }
     private String storeFile(MultipartFile file) throws IOException {
         if(!isImageFile(file ) || file.getOriginalFilename() == null){
             throw new IOException("Invalid image file format");
@@ -133,15 +153,17 @@ public class ProductController {
 
     @GetMapping("")
     public ResponseEntity<ProductListResponse> getProducts(
-            @RequestParam("page")     int page,
-            @RequestParam("limit")    int limit
+            @RequestParam(defaultValue = "") String keyword ,
+            @RequestParam(defaultValue = "0",name = "category_id") Long categoryId,
+            @RequestParam(defaultValue = "0")     int page,
+            @RequestParam(defaultValue = "12")    int limit
     ) {
 
         // tạo pageable t thông tin trang và giới hạn
         PageRequest pageRequest=PageRequest.of(
                 page,limit,
-                Sort.by("createdAt").descending());
-        Page<ProductResponse> productPage=productService.getAllProducts(pageRequest);
+                Sort.by("id").ascending());
+        Page<ProductResponse> productPage=productService.getAllProducts(keyword,categoryId,pageRequest);
         // Lấy ra tổng số trang
         int totalPages= productPage.getTotalPages();
         List<ProductResponse>products=productPage.getContent();
@@ -157,14 +179,15 @@ public class ProductController {
             @PathVariable("id") Long productId
     ) {
         try {
-            Product existingProduct =productService.getProductById(productId);
+            Product existingProduct = productService.getProductById(productId);
             return ResponseEntity.ok(ProductResponse.fromProduct(existingProduct));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
+
     }
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteProduct(@PathVariable long id) {
+    public ResponseEntity<String> deleteProduct(@PathVariable Long id) {
         try {
             productService.deleteProduct(id);
             return ResponseEntity.ok("Product deleted successfully");
@@ -173,8 +196,23 @@ public class ProductController {
         }
     }
 
+    @GetMapping("/by-ids")
+    public ResponseEntity<?> getProductsByIds(@RequestParam("ids") String ids) {
+        //eg: 1,3,5,7
+        try {
+            // Tách chuỗi ids thành một mảng các số nguyên
+            List<Long> productIds = Arrays.stream(ids.split(","))
+                    .map(Long::parseLong)
+                    .collect(Collectors.toList());
+            List<Product> products = productService.findProductsByIds(productIds);
+            return ResponseEntity.ok(products);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
     @PostMapping("/generateFakeProducts")
-    public ResponseEntity<String> generateFakeProducts(){
+    private ResponseEntity<String> generateFakeProducts(){
 
         Faker faker=new Faker();
         for(int i=0;i< 1_000_000;i++){
@@ -200,7 +238,7 @@ public class ProductController {
     @PutMapping("/{id}")
     public ResponseEntity<?> updateProduct(
             @PathVariable long id,
-            @RequestBody ProductDTO productDTO){
+            @RequestBody ProductDTO productDTO) throws Exception {
         try {
            Product updatedProduct= productService.updateProduct(id, productDTO);
            return ResponseEntity.ok(updatedProduct);

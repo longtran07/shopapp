@@ -24,7 +24,6 @@ import java.util.List;
 import static org.springframework.http.HttpMethod.*;
 
 @Configuration
-@EnableMethodSecurity
 @RequiredArgsConstructor
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig {
@@ -56,7 +55,7 @@ public class WebSecurityConfig {
 
                             )
                             .permitAll()
-                            .requestMatchers(GET, String.format("%s/roles", apiPrefix))
+                            .requestMatchers(GET, String.format("%s/roles**", apiPrefix))
                             .permitAll()
 
                             .requestMatchers(GET, String.format("%s/products", apiPrefix))
@@ -65,14 +64,12 @@ public class WebSecurityConfig {
                             .requestMatchers(GET, String.format("%s/products/**", apiPrefix))
                             .permitAll()
 
-                            .requestMatchers(GET, String.format("%s/categories", apiPrefix))
+                            .requestMatchers(GET, String.format("%s/categories**", apiPrefix))
                             .permitAll()
 
                             .requestMatchers(POST,
                                     String.format("%s/categories/**", apiPrefix)).hasAnyRole(Role.ADMIN)
 
-                            .requestMatchers(POST,
-                                    String.format("%s/users/details", apiPrefix)).hasAnyRole(Role.ADMIN,Role.USER)
 
                             .requestMatchers(PUT,
                                     String.format("%s/categories/**", apiPrefix)).hasAnyRole(Role.ADMIN)
@@ -108,7 +105,7 @@ public class WebSecurityConfig {
                                     String.format("%s/order_details/**", apiPrefix)).hasAnyRole(Role.USER)
 
                             .requestMatchers(GET,
-                                    String.format("%s/order_details/**", apiPrefix)).hasAnyRole(Role.USER, Role.ADMIN)
+                                    String.format("%s/order_details/**", apiPrefix)).permitAll()
 
                             .requestMatchers(PUT,
                                     String.format("%s/order_details/**", apiPrefix)).hasRole(Role.ADMIN)

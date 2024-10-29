@@ -9,7 +9,7 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 public interface IOrderService {
-    Order ceaterOrder(OrderDTO orderDTO) throws Exception;
+    Order createOrder(OrderDTO orderDTO) throws Exception;
 
     Order getOrder(Long id);
     Order updateOrder(long id, OrderDTO orderDTO) throws Exception;

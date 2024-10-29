@@ -40,7 +40,7 @@ public class OrderController {
                         .toList();
                 return ResponseEntity.badRequest().body(errorMessage);
             }
-            Order orderResponse=orderService.ceaterOrder(orderDTO);
+            Order orderResponse=orderService.createOrder(orderDTO);
             return ResponseEntity.ok(orderResponse);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());

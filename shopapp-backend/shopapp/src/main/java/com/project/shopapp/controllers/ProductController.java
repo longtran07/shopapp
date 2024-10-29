@@ -12,6 +12,8 @@ import com.project.shopapp.services.IProductService;
 import com.project.shopapp.services.ProductService;
 import com.project.shopapp.utils.MessageKeys;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.io.UrlResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -42,6 +44,7 @@ import java.util.stream.Collectors;
 public class ProductController {
     private final IProductService productService;
     private final LocalizationUtils localizationUtils;
+    private static final Logger logger= LoggerFactory.getLogger(ProductController.class);
     @PostMapping("")
     //POST http://localhost:8088/v1/api/products
     public ResponseEntity<?> createProduct(
@@ -163,6 +166,7 @@ public class ProductController {
         PageRequest pageRequest=PageRequest.of(
                 page,limit,
                 Sort.by("id").ascending());
+        logger.info(String.format("keyword = %s, category_id = %d",keyword,categoryId,page,limit));
         Page<ProductResponse> productPage=productService.getAllProducts(keyword,categoryId,pageRequest);
         // Lấy ra tổng số trang
         int totalPages= productPage.getTotalPages();

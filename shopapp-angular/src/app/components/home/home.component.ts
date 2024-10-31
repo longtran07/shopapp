@@ -1,56 +1,91 @@
-
-import { CategoryService } from './../../services/category.service';
-import { ProductService } from './../../services/product.service';
-import { Component } from '@angular/core';
-import { Product } from 'src/app/models/product';
-import { Category } from 'src/app/models/category';
 import { environment } from 'src/app/environments/environment';
+import { Component, OnInit } from '@angular/core';
+import { Product } from '../../models/product';
+import { Category } from '../../models/category';
+import { ProductService } from 'src/app/services/product.service';
+import { CategoryService } from 'src/app/services/category.service';
 import { Router } from '@angular/router';
+import { TokenService } from 'src/app/services/token.service';
+import { UserService } from 'src/app/services/user.service';
+import { UserResponse } from 'src/app/responses/user/user.response';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
   products: Product[] = [];
-  categories: Category[]=[];
-  selectedCategoryId: number = 0;
-  currentPage : number =1;
-  itemsPerPage : number =12;
-  pages : number[]=[];
-  totalPages  : number = 0;
+  categories: Category[] = []; // Dữ liệu động từ categoryService
+  selectedCategoryId: number  = 0; // Giá trị category được chọn
+  currentPage: number = 0;
+  itemsPerPage: number = 12;
+  pages: number[] = [];
+  totalPages:number = 0;
   visiblePages: number[] = [];
-  keyword : string="";
+  keyword:string = "";
+  userResponse?:UserResponse | null;
+  isPopoverOpen = false;
+  activeNavItem: number = 0;
 
   constructor(
-    private productService : ProductService,
-    private categoryService: CategoryService,
-    private router: Router
+    private userService: UserService,       
+    private productService: ProductService,
+    private categoryService: CategoryService,    
+    private router: Router,
+    private tokenService: TokenService
+    ) {}
 
-  ){}
-  ngOnInit(){
+  ngOnInit() {
+    this.userResponse = this.userService.getUserResponseFromLocalStorage();    
     this.getProducts(this.keyword, this.selectedCategoryId, this.currentPage, this.itemsPerPage);
-    this.getCategories(1,100);
+    this.getCategories(1, 100);
   }
-  getCategories(page: number,limit : number){
-    this.categoryService.getCategories(page,limit).subscribe({
-      next: (categories: Category[])=> {
-          debugger
-          this.categories=categories;
+  getCategories(page: number, limit: number) {
+    this.categoryService.getCategories(page, limit).subscribe({
+      next: (categories: Category[]) => {
+        debugger
+        this.categories = categories;
       },
-      complete:() => {
-          debugger
+      complete: () => {
+        debugger;
       },
-      error:(error: any)=> {
-          console.error('Error fetching categories:', error)
+      error: (error: any) => {
+        console.error('Error fetching categories:', error);
+      }
+    });
+  }
+  searchProducts() {
+    this.currentPage = 0;
+    this.itemsPerPage = 12;
+    debugger
+    this.getProducts(this.keyword, this.selectedCategoryId, this.currentPage, this.itemsPerPage);
+  }
+  getProducts(keyword: string, selectedCategoryId: number, page: number, limit: number) {
+    debugger
+    this.productService.getProducts(keyword, selectedCategoryId, page, limit).subscribe({
+      next: (response: any) => {
+        debugger
+        response.products.forEach((product: Product) => {          
+          product.url = `${environment.apiBaseUrl}/products/images/${product.thumbnail}`;
+        });
+        this.products = response.products;
+        this.totalPages = response.totalPages;
+        this.visiblePages = this.generateVisiblePageArray(this.currentPage, this.totalPages);
       },
-    })
+      complete: () => {
+        debugger;
+      },
+      error: (error: any) => {
+        debugger;
+        console.error('Error fetching products:', error);
+      }
+    });    
   }
   onPageChange(page: number) {
     debugger;
     this.currentPage = page;
-    this.getProducts( this.keyword, this.selectedCategoryId, this.currentPage, this.itemsPerPage);
+    this.getProducts(this.keyword, this.selectedCategoryId, this.currentPage, this.itemsPerPage);
   }
 
   generateVisiblePageArray(currentPage: number, totalPages: number): number[] {
@@ -64,47 +99,35 @@ export class HomeComponent {
       startPage = Math.max(endPage - maxVisiblePages + 1, 1);
     }
 
-    return new Array(endPage - startPage + 1).fill(0).map((_, index) => startPage + index);
+    return new Array(endPage - startPage + 1).fill(0)
+        .map((_, index) => startPage + index);
   }
-  // onProductClick(productId: number) {
-  //   debugger
-  //   // Điều hướng đến trang detail-product với productId là tham số
-  //   this.router.navigate(['/detail-product', productId]);
-  // }
-    // Hàm xử lý sự kiện khi sản phẩm được bấm vào
-    onProductClick(productId: number) {
+
+  onProductClick(productId: number) {
+    debugger
+    this.router.navigate(['/products', productId]);
+  }  
+
+  
+  togglePopover(event: Event): void {
+    event.preventDefault();
+    this.isPopoverOpen = !this.isPopoverOpen;
+  }
+
+  handleItemClick(index: number): void {
+    if(index === 0) {
       debugger
-      // Điều hướng đến trang detail-product với productId là tham số
-      this.router.navigate(['/products', productId]);
-    }  
-
-  searchProducts() {
-    this.currentPage = 1;
-    this.itemsPerPage = 12;
-    debugger
-    this.getProducts(this.keyword, this.selectedCategoryId, this.currentPage, this.itemsPerPage);
+      this.router.navigate(['/user-profile']);                      
+    } else if (index === 2) {
+      this.userService.removeUserFromLocalStorage();
+      this.tokenService.removeToken();
+      this.userResponse = this.userService.getUserResponseFromLocalStorage();    
+    }
+    this.isPopoverOpen = false; 
   }
 
-  getProducts( keyword: string, selectedCategoryId: number, page: number, limit: number){
-    debugger
-    this.productService.getProducts(keyword, selectedCategoryId, page, limit).subscribe({
-      next:(response: any)=>{
-        debugger
-        response.products.forEach((product: Product) => {
-            product.url =`${environment.apiBaseUrl}/products/images/${product.thumbnail}`;
-        });
-        this.products=response.products;
-        this.totalPages=response.totalPages;
-        this.visiblePages=response.visiblePages;
-      },
-      complete() {
-          debugger;
-      },
-      error(error: any) {
-          debugger;
-          console.error('Error fetching products:', error)
-      },
-    })
-
-  }
+  
+  setActiveNavItem(index: number) {    
+    this.activeNavItem = index;
+  }  
 }

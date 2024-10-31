@@ -1,53 +1,55 @@
-@import '../../styles/shared-styles.scss';
-
-header {
-    background-color: rgba(0, 0, 0, 0);
-    color: rgb(173, 178, 203);
+.top-bar {
+    background-color: #f8f9fa;
+    padding: 10px 0;
+  }
+  
+  .search-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .search-box .search-input {
+    width: 200px;
+    padding: 5px;
+    border-radius: 4px;
+  }
+  
+  .navbar {
+    padding: 0.5rem 1rem;
+  }
+  
+  .navbar-nav .nav-link {
+    color: #333;
+    font-weight: normal;
+  }
+  
+  .navbar-nav .nav-link.active {
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .navbar-brand img {
+    max-width: 40px;
+  }
+  
+  .popover-list {
+    width: 200px; /* Kích thước cố định cho danh sách popover */
+    overflow: hidden;
 }
 
-.navbar {
-    background-color: rgba(0, 0, 0, 0) !important;
-}
-
-.navbar .container {
-    background-color: rgba(0, 0, 0, 0) !important;
-}
-
-.navbar .container .navbar-brand {
-    color: rgb(173, 178, 203);
-}
-
-.navbar .container .navbar-nav .nav-link {
-    color: rgb(173, 178, 203);
-    border-radius: 18px;
-    padding: 8px 16px;
-}
-
-.navbar .container .navbar-nav .nav-link.active {
-    background-color: $shopapp-color !important;
-    color: white !important;
-}
-.nav-item.active {
-    background-color: $shopapp-color !important;
-    color: white !important;
-}
-
-/* Add this CSS to your project's stylesheet */
-
-.popover-list {
-    padding: 10px;
-}
-.popover-body {
-    padding: 0px;
-}
 .popover-item {
     display: block;
-    margin-bottom: 5px;
+    padding: 10px;
+    transition: transform 0.3s ease, font-weight 0.3s ease;
+    color: black; /* Màu đen mặc định */
     text-decoration: none;
-    color: #333;
 }
 
 .popover-item:hover {
-    background-color: #f0f0f0;
-    color: $shopapp-color;    
+    transform: scale(1.05); /* Phóng to phần bên trong */
+    font-weight: bold;
+    background-color: #f0f0f0; /* Màu nền khi hover */
+    color: #000;
 }
+  

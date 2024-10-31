@@ -1,32 +1,19 @@
 @import '../../styles/shared-styles.scss';
 
 .container {
-    color: white;
+    color: rgb(0, 0, 0);
 }
 .intro-section {
-    color: white;
     padding: 20px;
     text-align: center;
 }
-.product-header {
-    color: $shopapp-tint-color;
-}
 .form-control {
-    background-color: $shopapp-background-color;
     border: 1px solid rgb(29, 33, 54);
-    color: white;
 }
 
 .form-control:focus {
-    border-color: white;
-    background-color: $shopapp-background-color;
+    border-color: rgb(31, 31, 31);
 }
 .form-label {
-    color: white;
-}
-.product-header {
-    color: $shopapp-tint-color;
-}
-.product-order {
-    color: $shopapp-title-color;
+    color: rgb(35, 35, 35);
 }

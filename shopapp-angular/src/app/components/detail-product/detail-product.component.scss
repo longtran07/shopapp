@@ -1,6 +1,6 @@
 @import '../../styles/shared-styles.scss';
 .intro-section {
-    color: white;
+    color: rgb(0, 0, 0);
     padding: 20px;
     text-align: center;
 }
@@ -21,6 +21,7 @@
     width: 120px;
     height: 120px;
     margin-right: 5px;
+    border: 3px solid #cfcdcd;
     /* Thêm khoảng cách ngang giữa các ảnh */
 }
 
@@ -36,10 +37,10 @@
 }
 
 .thumbnail-item.active {
-    border: 4px solid $shopapp-tint-color;
+    border: 3px solid black;
 }
 .product-details {
-    color: white;
+    color: rgb(0, 0, 0);
     padding: 20px;
 }
 
@@ -53,7 +54,7 @@
     margin-right: 10px;
 }
 .border-wrapper {
-    border: 1px solid white;      
+    border: 1px solid rgb(0, 0, 0);      
   }
 
   .product-quantity {
@@ -66,14 +67,14 @@
   .product-quantity button {
       background-color: transparent;
       border: none;
-      color: white;
+      color: rgb(0, 0, 0);
       font-size: 16px;
       cursor: pointer;
   }
   .product-quantity input {
     background-color: transparent;
     border: none;
-    color: white;
+    color: rgb(0, 0, 0);
     font-size: 16px;
     text-align: center;
     width: 40px;

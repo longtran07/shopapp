@@ -14,6 +14,7 @@
                         formControlName="fullname" 
                         class="form-control" 
                         id="fullname" 
+                        placeholder="Họ và tên"
                         [class.is-invalid]="orderForm.get('fullname')!.invalid && orderForm.get('fullname')!.touched">
                     <div 
                         *ngIf="orderForm.get('fullname')!.invalid && orderForm.get('fullname')!.touched" 
@@ -27,6 +28,7 @@
                         formControlName="email" 
                         class="form-control" 
                         id="email" 
+                        placeholder="Email"
                         [class.is-invalid]="orderForm.get('email')!.invalid && orderForm.get('email')!.touched">
                     <div *ngIf="orderForm.get('email')!.invalid && orderForm.get('email')!.touched" 
                         class="invalid-feedback">
@@ -71,16 +73,16 @@
                 </div>
                 <div class="mb-3">
                     <label for="shippingMethod">Phương thức vận chuyển</label>
-                    <select class="form-control" id="shippingMethod" 
-                        formControlName="shipping_method">
+                    <select class="form-control" id="shippingMethod" formControlName="shipping_method">
+                        <option value="" disabled selected>Chọn phương thức vận chuyển</option>
                         <option value="express">Nhanh (Express)</option>
                         <option value="normal">Thường (Normal)</option>
                     </select>
                 </div>
                 <div class="mb-3">
                     <label for="paymentMethod">Phương thức thanh toán</label>
-                    <select class="form-control" id="paymentMethod"
-                        formControlName="payment_method">                     
+                    <select class="form-control" id="paymentMethod" formControlName="payment_method">
+                        <option value="" disabled selected>Chọn phương thức thanh toán</option>
                         <option value="cod">Thanh toán khi nhận hàng (COD)</option>
                         <option value="other">Thanh toán khác</option>
                     </select>
@@ -122,13 +124,13 @@
                 <h4 class="product-header">Nhập coupon</h4>
                 <div class="input-group">
                     <input type="text" class="form-control" placeholder="Nhập coupon">
-                    <button class="btn btn-gradient" type="button">Áp dụng</button>
+                    <button class="btn btn-dark" type="button">Áp dụng</button>
                 </div>
             </div>            
             <div class="text-start mt-3">
                 <button 
                     (click)="placeOrder()"
-                    class="btn btn-gradient" type="button">Đặt hàng</button>
+                    class="btn btn-dark" type="button">Đặt hàng</button>
             </div>
         </div>
     </div>   

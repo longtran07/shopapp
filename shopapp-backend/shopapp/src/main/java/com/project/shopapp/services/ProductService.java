@@ -16,9 +16,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
-import java.util.Optional;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.util.*;
 
 @RequiredArgsConstructor
 @Service
@@ -101,6 +107,23 @@ public class ProductService implements IProductService{
         return productRepository.existsByName(name);
     }
     @Override
+//    public ProductImage createProductImage(Long productId, ProductImageDTO productImageDTO) throws Exception {
+//        Product existingProduct = productRepository
+//                .findById(productId)
+//                .orElseThrow(() -> new DataNotFoundException("Không tìm thấy sản phẩm với id = " + productId));
+//
+//        int currentImageCount = productImageRepository.findByProductId(productId).size();
+//        if (currentImageCount >= ProductImage.MAXIMUM_IMAGES_PER_PRODUCT) {
+//            throw new InvalidParamException("Số lượng ảnh phải <= " + ProductImage.MAXIMUM_IMAGES_PER_PRODUCT);
+//        }
+//
+//        ProductImage newProductImage = ProductImage.builder()
+//                .product(existingProduct)
+//                .imageUrl(productImageDTO.getImageUrl())
+//                .build();
+//
+//        return productImageRepository.save(newProductImage);
+//    }
     @Transactional
     public ProductImage createProductImage(
             Long product_id,
@@ -127,4 +150,6 @@ public class ProductService implements IProductService{
     public List<Product> findProductsByIds(List<Long> productIds) {
         return productRepository.findProductsByIds(productIds);
     }
+
+
 }

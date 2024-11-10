@@ -65,6 +65,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
             filterChain.doFilter(request,response);
         }
         catch (Exception e){
+            logger.error("Error occurred during JWT authentication: ", e);
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED,"Unauthorized");
         }
     }

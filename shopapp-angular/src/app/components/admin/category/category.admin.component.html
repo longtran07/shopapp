@@ -1,1 +1,118 @@
-<p>category works!</p>
+<div class="container">
+    <h2>Category List</h2>
+    <!-- Button to open the modal -->
+<button (click)="openAddCategoryModal(content)" class="btn btn-primary">Thêm Danh Mục</button>
+
+<div *ngIf="isNotificationVisible" class="notification">
+  {{ notificationMessage }}
+</div>
+
+<!-- Modal add content -->
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Thêm Danh Mục</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="addCategoryForm">
+      <div class="form-group">
+        <label for="name">Tên Danh Mục</label>
+        <input
+          type="text"
+          id="name"
+          formControlName="name"
+          class="form-control"
+          placeholder="Nhập tên danh mục"
+          required
+        />
+        <div *ngIf="addCategoryForm.get('name')?.invalid && addCategoryForm.get('name')?.touched" class="text-danger">
+          Tên danh mục là bắt buộc.
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.dismiss('Cancel click')">Hủy</button>
+    <button type="button" class="btn btn-primary" (click)="onAddCategory()">Lưu</button>
+  </div>
+</ng-template>
+
+
+<!-- Model update category -->
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Update Category</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="addCategoryForm">
+      <div class="form-group">
+        <label for="name">Tên Danh Mục</label>
+        <input
+          type="text"
+          id="name"
+          formControlName="name"
+          class="form-control"
+          placeholder="Nhập tên danh mục"
+          required
+        />
+        <div *ngIf="addCategoryForm.get('name')?.invalid && addCategoryForm.get('name')?.touched" class="text-danger">
+          Tên danh mục là bắt buộc.
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.dismiss('Cancel click')">Hủy</button>
+    <button type="button" class="btn btn-primary" (click)="onUpdateCategory()">Lưu</button>
+  </div>
+</ng-template>
+
+<!-- Modal xác nhận xóa -->
+<ng-template #deleteConfirmModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Xác nhận xóa</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    Bạn có chắc chắn muốn xóa danh mục này không?
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.dismiss('Cancel click')">Hủy</button>
+    <button type="button" class="btn btn-danger" (click)="confirmDelete()">Xóa</button>
+  </div>
+</ng-template>
+
+
+
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Name</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let category of categories">
+            
+            <td>{{ category.id }}</td>
+            <td>{{ category.name }}</td>
+          
+          <td>
+            <!-- <button class="btn btn-info" (click)="updateCategory(category.id)">Update</button> -->
+            <button (click)="openUpdateCategoryModal(content)" class="btn btn-primary">Update</button>
+            <button class="btn btn-danger" (click)="openDeleteConfirmModal(deleteConfirmModal, category.id)">Delete</button>
+
+          </td>
+        </tr>
+      </tbody>
+    </table>
+</div>

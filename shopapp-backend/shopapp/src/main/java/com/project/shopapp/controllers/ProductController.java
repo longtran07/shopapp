@@ -1,5 +1,6 @@
 package com.project.shopapp.controllers;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.javafaker.Faker;
 import com.project.shopapp.components.LocalizationUtils;
 import com.project.shopapp.dtos.*;
@@ -11,6 +12,7 @@ import com.project.shopapp.responses.ProductResponse;
 import com.project.shopapp.services.IProductService;
 import com.project.shopapp.services.ProductService;
 import com.project.shopapp.utils.MessageKeys;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,6 +47,7 @@ public class ProductController {
     private final IProductService productService;
     private final LocalizationUtils localizationUtils;
     private static final Logger logger= LoggerFactory.getLogger(ProductController.class);
+
     @PostMapping("")
     //POST http://localhost:8088/v1/api/products
     public ResponseEntity<?> createProduct(
@@ -103,6 +106,10 @@ public class ProductController {
                                 .build()
                 );
                 productImages.add(productImage);
+                if (existingProduct.getThumbnail() == null || existingProduct.getThumbnail().isEmpty()) {
+                    existingProduct.setThumbnail(filename);
+                    productService.updateProductThumbnail(existingProduct);
+                }
             }
             return ResponseEntity.ok().body(productImages);
         } catch (Exception e) {
@@ -159,7 +166,7 @@ public class ProductController {
             @RequestParam(defaultValue = "") String keyword ,
             @RequestParam(defaultValue = "0",name = "category_id") Long categoryId,
             @RequestParam(defaultValue = "0")     int page,
-            @RequestParam(defaultValue = "12")    int limit
+            @RequestParam(defaultValue = "10")    int limit
     ) {
 
         // tạo pageable t thông tin trang và giới hạn
@@ -184,23 +191,29 @@ public class ProductController {
     ) {
         try {
             Product existingProduct = productService.getProductById(productId);
+            if (existingProduct == null) {
+                return ResponseEntity.notFound().build(); // Trả về 404 nếu không tìm thấy sản phẩm
+            }
             return ResponseEntity.ok(ProductResponse.fromProduct(existingProduct));
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage()); // Trả về 500 nếu có lỗi
         }
-
     }
+
+
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteProduct(@PathVariable Long id) {
         try {
             productService.deleteProduct(id);
             return ResponseEntity.ok("Product deleted successfully");
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while deleting the product.");
         }
     }
 
-    @GetMapping("/by-ids")
+        @GetMapping("/by-ids")
     public ResponseEntity<?> getProductsByIds(@RequestParam("ids") String ids) {
         //eg: 1,3,5,7
         try {
@@ -226,7 +239,6 @@ public class ProductController {
                     .name(productName)
                     .price((float)faker.number().numberBetween(10,90_00))
                     .description(faker.lorem().sentence())
-                    .thumbnail("")
                     .categoryId((long)faker.number().numberBetween(1,3))
                     .build();
             try {
@@ -242,13 +254,22 @@ public class ProductController {
     @PutMapping("/{id}")
     public ResponseEntity<?> updateProduct(
             @PathVariable long id,
-            @RequestBody ProductDTO productDTO) throws Exception {
+            @RequestParam("product") String productJson,
+            @RequestParam(value = "images", required = false) MultipartFile[] images) throws Exception {
         try {
-           Product updatedProduct= productService.updateProduct(id, productDTO);
-           return ResponseEntity.ok(updatedProduct);
+            // Chuyển đổi JSON sang đối tượng ProductDTO
+            ObjectMapper objectMapper = new ObjectMapper();
+            ProductDTO productDTO = objectMapper.readValue(productJson, ProductDTO.class);
+
+            // Cập nhật sản phẩm và xử lý hình ảnh
+            Product updatedProduct = productService.updateProduct(id, productDTO, images);
+            return ResponseEntity.ok(updatedProduct);
         } catch (DataNotFoundException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Lỗi khi chuyển đổi dữ liệu.");
         }
     }
+
 
 }

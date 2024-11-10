@@ -4,8 +4,11 @@ import { DetailOrderAdminComponent } from "./detail-order/detail.order.admin.com
 import { Route, Router,Routes } from "@angular/router";
 import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
-import { ProductAdminComponent } from "./product/product.admin.component";
 import { CategoryAdminComponent } from "./category/category.admin.component";
+import { AdminAddProductComponent } from "./admin-product/admin-add-product/admin-add-product.component";
+import { AdminDetailProductComponent } from "./admin-product/admin-detail-product/admin-detail-product.component";
+import { ProductAdminComponent } from "./admin-product/admin-view-product/product.admin.component";
+
 
 const routes: Routes = [
     {
@@ -28,6 +31,10 @@ const routes: Routes = [
                 path: 'categories',
                 component: CategoryAdminComponent
             },
+            { path: 'products', component: ProductAdminComponent },
+            { path: 'products/add', component: AdminAddProductComponent }, // Component thêm sản phẩm
+            { path: 'products/:id', component: AdminDetailProductComponent }, // 
+        
         ]
     }
 ];

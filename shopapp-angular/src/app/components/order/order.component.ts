@@ -84,7 +84,6 @@ export class OrderComponent implements OnInit{
             quantity: cart.get(productId)!
           };
         });
-        console.log('haha');
       },
       complete: () => {
         debugger;

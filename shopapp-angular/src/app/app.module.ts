@@ -19,6 +19,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AdminModule } from './components/admin/admin.module';
+import { OrderListComponent } from './components/order-list/order-list.component';
+import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -33,6 +35,7 @@ import { AdminModule } from './components/admin/admin.module';
     RegisterComponent, 
     UserProfileComponent,
     AppComponent,
+    OrderListComponent,
   ],
   imports: [
     CommonModule,
@@ -42,7 +45,8 @@ import { AdminModule } from './components/admin/admin.module';
     HttpClientModule,    
     AppRoutingModule,    
     NgbModule,        
-    AdminModule
+    AdminModule,
+    NgbCarouselModule
   ],
   providers: [
     {

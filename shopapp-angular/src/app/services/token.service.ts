@@ -15,7 +15,7 @@ setToken(token: string): void {
     localStorage.setItem(this.TOKEN_KEY, token);             
 }
 getUserId(): number {
-    debugger
+    // debugger
     let userObject = this.jwtHelper.decodeToken(this.getToken() ?? '');
     return 'userId' in userObject ? parseInt(userObject['userId']) : 0;
 }

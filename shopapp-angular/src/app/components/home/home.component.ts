@@ -92,11 +92,11 @@ export class HomeComponent implements OnInit {
     const maxVisiblePages = 5;
     const halfVisiblePages = Math.floor(maxVisiblePages / 2);
 
-    let startPage = Math.max(currentPage - halfVisiblePages, 1);
-    let endPage = Math.min(startPage + maxVisiblePages - 1, totalPages);
+    let startPage = Math.max(currentPage - halfVisiblePages, 0);
+    let endPage = Math.min(startPage + maxVisiblePages - 1, totalPages-1);
 
     if (endPage - startPage + 1 < maxVisiblePages) {
-      startPage = Math.max(endPage - maxVisiblePages + 1, 1);
+      startPage = Math.max(endPage - maxVisiblePages + 1, 0);
     }
 
     return new Array(endPage - startPage + 1).fill(0)

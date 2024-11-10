@@ -3,6 +3,7 @@ import { UserService } from '../../services/user.service';
 import { UserResponse } from 'src/app/responses/user/user.response';
 import { TokenService } from 'src/app/services/token.service';
 import { Router } from '@angular/router';
+import { NgbPopoverConfig } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-admin',
@@ -12,6 +13,8 @@ import { Router } from '@angular/router';
   ]
 })
 export class AdminComponent implements OnInit {
+  isPopoverOpen = false;
+  activeNavItem: number = 0;
   //adminComponent: string = 'orders';
   userResponse?:UserResponse | null;
   constructor(
@@ -24,13 +27,13 @@ export class AdminComponent implements OnInit {
   ngOnInit() {
     this.userResponse = this.userService.getUserResponseFromLocalStorage();    
     //default router
-    this.router.navigate(['/admin/orders']);
+    this.router.navigate(['/admin/products']);
    }  
   logout() {
     this.userService.removeUserFromLocalStorage();
     this.tokenService.removeToken();
     this.userResponse = this.userService.getUserResponseFromLocalStorage();    
-    this.router.navigate(['/']);
+    this.router.navigate(['/admin']);
   }
   showAdminComponent(componentName: string): void {
     //this.adminComponent = componentName;orders,categories
@@ -43,13 +46,27 @@ export class AdminComponent implements OnInit {
     }
     
   }
+
+  togglePopover(event: Event): void {
+    event.preventDefault();
+    this.isPopoverOpen = !this.isPopoverOpen;
+  }
+  handleItemClick(index: number): void {
+    if (index === 0) {
+      this.router.navigate(['/user-profile']);
+    } else if (index === 1) {
+      this.router.navigate(['/order-list']);
+    } else if (index === 2) {
+      this.userService.removeUserFromLocalStorage();
+      this.tokenService.removeToken();
+      this.userResponse = this.userService.getUserResponseFromLocalStorage();
+    }
+    this.isPopoverOpen = false;
+  }
+  setActiveNavItem(index: number) {    
+    this.activeNavItem = index;
+    //alert(this.activeNavItem);
+  }
+ 
 }
 
-/**
- npm install --save font-awesome
- angular.json:
- "styles": [   
-    "node_modules/font-awesome/css/font-awesome.min.css"
-],
-
- */

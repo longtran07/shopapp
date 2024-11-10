@@ -1,6 +1,7 @@
 package com.project.shopapp.responses;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.project.shopapp.dtos.ProductImageDTO;
 import com.project.shopapp.models.Product;
 import com.project.shopapp.models.ProductImage;
 import jakarta.validation.constraints.Max;
@@ -11,6 +12,7 @@ import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
 @Getter
@@ -26,10 +28,27 @@ public class ProductResponse extends BaseResponse {
     private String description;
     @JsonProperty("category_id")
     private Long categoryId;
+
     @JsonProperty("product_images")
-    private List<ProductImage> productImages=new ArrayList<>();
+    private List<ProductImageDTO> productImages = new ArrayList<>(); // Định nghĩa kiểu ở đây
+
+//    @JsonProperty("product_images")
+//
+//    private List<ProductImage> productImages=new ArrayList<>();
 
     public static ProductResponse fromProduct(Product product){
+
+
+
+        List<ProductImageDTO> productImageDTOS=product.getProductImages().stream()
+                .map(image -> ProductImageDTO.builder()
+                        .productId(product.getId())
+                        .imageUrl(image.getImageUrl())
+                        .build())
+                .collect(Collectors.toList());
+
+
+
         ProductResponse productResponse=ProductResponse.builder()
                 .id(product.getId())
                 .name(product.getName())
@@ -37,7 +56,7 @@ public class ProductResponse extends BaseResponse {
                 .thumbnail(product.getThumbnail())
                 .description(product.getDescription())
                 .categoryId(product.getCategory().getId())
-                .productImages(product.getProductImages())
+                .productImages(productImageDTOS)
                 .build();
         productResponse.setCreatedAt(product.getCreatedAt());
         productResponse.setUpdatedAt(product.getUpdatedAt());

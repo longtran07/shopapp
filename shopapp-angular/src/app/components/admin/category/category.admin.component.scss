@@ -1,0 +1,124 @@
+/* Container Styling */
+.container {
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Title Styling */
+.container h2 {
+  text-align: center;
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* Button Styling */
+.btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+}
+
+.btn-danger {
+  background-color: #dc3545;
+  border-color: #dc3545;
+}
+
+.btn-danger:hover {
+  background-color: #c82333;
+}
+
+.btn {
+  margin-right: 8px;
+  padding: 6px 12px;
+  font-size: 14px;
+}
+
+/* Table Styling */
+.table {
+  width: 100%;
+  margin-top: 20px;
+  border-collapse: collapse;
+  background-color: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  border-radius: 8px;
+}
+
+.table thead {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.table thead th {
+  padding: 12px;
+  font-size: 16px;
+}
+
+.table tbody tr:hover {
+  background-color: #f1f1f1;
+}
+
+.table tbody td {
+  padding: 10px;
+  text-align: center;
+  border-top: 1px solid #e9ecef;
+}
+
+/* Modal Styling */
+.modal-header {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.modal-title {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.modal-footer .btn-secondary {
+  background-color: #6c757d;
+}
+
+.modal-footer .btn-secondary:hover {
+  background-color: #5a6268;
+}
+
+/* Notification Styling */
+.notification {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #4caf50;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  font-size: 14px;
+}
+
+/* Form Styling */
+.form-group label {
+  font-weight: 600;
+}
+
+.form-control {
+  border-radius: 5px;
+  padding: 8px;
+  font-size: 14px;
+}
+
+.text-danger {
+  font-size: 13px;
+  margin-top: 5px;
+}
+
+/* Modal Delete Confirmation */
+.modal-body {
+  font-size: 16px;
+}

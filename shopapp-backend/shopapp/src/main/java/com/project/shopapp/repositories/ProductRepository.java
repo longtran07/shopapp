@@ -24,5 +24,8 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     @Query("SELECT p FROM Product p WHERE p.id IN :productIds")
     List<Product> findProductsByIds(@Param("productIds") List<Long> productIds);
 
+//    @Query(value = "select p from Product p where p.id > 1 limit 10",nativeQuery = true)
+//    List<Product> findLimit10();
+
 
 }

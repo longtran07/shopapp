@@ -2,8 +2,12 @@
 
 /* Header styles */
 
+.container{
+    margin-top: 20px;
+}
+
 .top-bar {
-    background-color: #f8f9fa;
+    background-color: #b6b34e;
     padding: 10px 0;
 }
 
@@ -39,6 +43,7 @@
 
 .navbar {
     padding: 0.5rem 1rem;
+    background-color: #a7b45e;
 }
 
 .navbar-nav .nav-link {
@@ -54,6 +59,7 @@
 .navbar-brand img {
     max-width: 40px;
 }
+
 
 .popover-list {
     padding: 10px;
@@ -175,4 +181,3 @@
     background-color: #f0f0f0; /* Màu nền khi hover */
     color: #000;
 }
-  

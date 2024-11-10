@@ -1,20 +1,13 @@
+@import '/src/app/styles/shared-styles.scss';
+
 .container-fluid {
     background-color: white;
     padding-left: 0 !important; /* Remove left padding */
     padding-right: 0 !important; /* Remove right padding */
 }
-.header {
-    background-color: #333;
-    /* Header background color */
-    color: white;
-    /* Text color */
-    padding: 10px;
-    /* Add padding to the header */
-    text-align: center;
-    /* Center-align text in the header */
-}
+
 #sidebar {
-    background-color: #007bff !important; /* Primary color */
+    background-color: #4e73df !important;
     color: white; /* Text color */
     height: 100vh;
     overflow-y: auto; /* Add scrollbars if content overflows */
@@ -25,14 +18,60 @@
     border-top: 1px solid rgba(255, 255, 255, 0.2); /* Add a border line at the top of each link */
     padding: 10px 15px; /* Add padding to links for spacing */
 }
-/* Custom CSS for active link */
-#sidebar a.active {
-    font-weight: bold; /* Highlight active link */
-}
+
 /* Change background color on hover */
 #sidebar a:hover {
-    background-color: #0056b3; /* Change the background color on hover */
+    background-color: #1e4cd9; /* Change the background color on hover */
+}
+
+.shadow {
+    box-shadow: 0 .15rem 1.75rem 0 rgba(58, 59, 69, .15) !important;
 }
 .icon {
     padding: 5px;
+}
+
+.no-gutter-row {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  .popover-list {
+    width: 200px; /* Kích thước cố định cho danh sách popover */
+    overflow: hidden;
+}
+
+.popover-item {
+    display: block;
+    padding: 10px;
+    transition: transform 0.3s ease, font-weight 0.3s ease;
+    color: black; /* Màu đen mặc định */
+    text-decoration: none;
+}
+
+.popover-item:hover {
+    transform: scale(1.05); /* Phóng to phần bên trong */
+    font-weight: bold;
+    background-color: #f0f0f0; /* Màu nền khi hover */
+    color: #000;
+}
+
+.search-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.search-box .search-input {
+    border: none;
+    border-bottom: 2px solid #000;
+    outline: none;
+    color: #000; /* Màu chữ đen */
+    background-color: #fff; /* Nền trắng */
+}
+
+.search-input::placeholder {
+    color: #333;
 }

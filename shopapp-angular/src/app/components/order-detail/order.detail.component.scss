@@ -1,7 +1,7 @@
 @import '../../styles/shared-styles.scss';
 
 .container {
-    color: white;
+    color: rgb(0, 0, 0);
 }
 .confirmation-container {
     margin: 50px auto;
@@ -31,9 +31,8 @@ table {
     border-radius: 10px;
     border: none;
     border-collapse: separate;
-    border: 1px solid white;
+    border: 1px solid rgb(4, 4, 4);
     border-spacing: 0;    
-    background-color: $shopapp-background-color;    
 }
 
 th,
@@ -43,7 +42,7 @@ td {
 }
 .btn-gradient {
     background: linear-gradient(to right, $shopapp-tint-color, $shopapp-color);
-    color: white;
+    color: rgb(0, 0, 0);
     border-radius: 30px;
     width: 200px;
 }

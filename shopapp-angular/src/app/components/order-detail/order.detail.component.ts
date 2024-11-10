@@ -8,6 +8,7 @@ import { environment } from 'src/app/environments/environment';
 
 import { OrderResponse } from 'src/app/responses/order/order.response';
 import { OrderDetail } from 'src/app/models/order.detail';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-order-detail',
@@ -15,6 +16,7 @@ import { OrderDetail } from 'src/app/models/order.detail';
   styleUrls: ['./order.detail.component.scss']
 })
 export class OrderDetailComponent implements OnInit {
+  orderId:number=0;
 
   orderResponse: OrderResponse = {
     id: 0, // Hoặc bất kỳ giá trị số nào bạn muốn
@@ -33,7 +35,10 @@ export class OrderDetailComponent implements OnInit {
     payment_method: '',
     order_details: [] // Một mảng rỗng
   };  
-  constructor(private orderService: OrderService) {}
+  constructor(
+    private route: ActivatedRoute,
+    private orderService: OrderService
+  ) {}
 
   ngOnInit(): void {
     this.getOrderDetails();
@@ -41,8 +46,8 @@ export class OrderDetailComponent implements OnInit {
 
   getOrderDetails(): void {
     debugger
-    const orderId = 9; // Thay bằng ID của đơn hàng bạn muốn lấy.
-    this.orderService.getOrderById(orderId).subscribe({
+    this.orderId = Number(this.route.snapshot.paramMap.get('id'));; // Thay bằng ID của đơn hàng bạn muốn lấy.
+    this.orderService.getOrderById(this.orderId).subscribe({
       next: (response: any) => {        
         debugger;       
         this.orderResponse.id = response.id;

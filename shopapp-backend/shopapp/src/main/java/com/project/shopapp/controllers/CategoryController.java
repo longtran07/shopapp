@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.MessageSource;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -19,8 +20,10 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.LocaleResolver;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 @RestController
 @RequestMapping("${api.prefix}/categories")
@@ -75,9 +78,9 @@ public class CategoryController {
                 .build());
     }
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteCategories(@PathVariable Long id){
-        categoryService.deleteCategory(id);
-        return ResponseEntity.ok(localizationUtils.getLocalizedMessage(MessageKeys.DELETE_CATEGORY_SUCCESSFULLY));
+    public ResponseEntity<Map<String, String>> deleteCategory(@PathVariable Long id) {
+        return categoryService.deleteCategory(id);
     }
+
 
 }

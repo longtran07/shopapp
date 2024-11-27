@@ -1,56 +1,44 @@
-.top-bar {
-    background-color: #f8f9fa;
-    padding: 10px 0;
-  }
-  
-  .search-box {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  
-  .search-box .search-input {
-    width: 200px;
-    padding: 5px;
-    border-radius: 4px;
-  }
-  
-  .navbar {
-    padding: 0.5rem 1rem;
-    background-color: #a7b45e;
-  }
-  
-  .navbar-nav .nav-link {
-    color: #333;
-    font-weight: normal;
-  }
-  
-  .navbar-nav .nav-link.active {
-    font-weight: bold;
-    color: #333;
-  }
-  
-  .navbar-brand img {
-    max-width: 40px;
-  }
-  
-  .popover-list {
-    width: 200px; /* Kích thước cố định cho danh sách popover */
-    overflow: hidden;
+.popover-list {
+  width: 200px; /* Kích thước cố định cho danh sách popover */
+  overflow: hidden;
 }
 
 .popover-item {
-    display: block;
-    padding: 10px;
-    transition: transform 0.3s ease, font-weight 0.3s ease;
-    color: black; /* Màu đen mặc định */
-    text-decoration: none;
+  display: block;
+  padding: 10px;
+  transition: transform 0.3s ease, font-weight 0.3s ease;
+  color: black; /* Màu đen mặc định */
+  text-decoration: none;
 }
 
 .popover-item:hover {
-    transform: scale(1.05); /* Phóng to phần bên trong */
-    font-weight: bold;
-    background-color: #f0f0f0; /* Màu nền khi hover */
-    color: #000;
+  transform: scale(1.05); /* Phóng to phần bên trong */
+  font-weight: bold;
+  background-color: #f0f0f0; /* Màu nền khi hover */
+  color: #000;
 }
-  
+.navbar {
+  padding: 1rem;
+  background:linear-gradient(#ee4d2d, #ff7337); /* Tông màu xanh olive */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand img {
+  max-width: 40px;
+}
+
+.navbar-nav .nav-link {
+  color: #ffffff; /* Màu chữ trắng */
+  font-weight: 500;
+  margin: 0 10px;
+  transition: color 0.3s;
+}
+
+.navbar-nav .nav-link.active,
+.navbar-nav .nav-link:hover {
+  color: #ffd700; /* Vàng sáng khi hover/active */
+}
+
+.icon{
+  padding-right: 5px;
+}

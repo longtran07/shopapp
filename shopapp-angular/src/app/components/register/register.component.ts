@@ -64,11 +64,10 @@ export class RegisterComponent {
     this.userService.register(registerDTO).subscribe({
       next: (response: any) => {
         debugger
-        if (response && response.message === "Register successfully") {
-          this.router.navigate(['/login']);
-        } else {
-          alert(`Unexpected response: ${response.message || 'Unknown error'}`);
-        }
+        alert(`Register successfully`);
+        this.router.navigate(['/login']);
+        
+        
       },
       complete: () => {
         debugger

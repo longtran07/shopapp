@@ -129,12 +129,15 @@ public class OrderService implements IOrderService{
 
     @Override
     @Transactional
-    public void deleteOrder(long id) {
-        Order order=orderRepository.findById(id).orElse(null);
-        if(order != null){
-            order.setActive(false);
-            orderRepository.save(order);
-        }
+    public void deleteOrder(long id) throws DataNotFoundException {
+//        Order order=orderRepository.findById(id).orElse(null);
+//        if(order != null){
+//            order.setActive(false);
+//            orderRepository.save(order);
+//        }
+        Order order = orderRepository.findById(id)
+                .orElseThrow(()-> new DataNotFoundException("Cannot find order with id: "+id));
+        orderRepository.delete(order);
     }
 
     @Override

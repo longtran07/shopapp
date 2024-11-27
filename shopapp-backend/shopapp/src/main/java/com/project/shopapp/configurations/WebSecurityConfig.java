@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.util.Pair;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -15,6 +16,7 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.annotation.web.configurers.CorsConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
@@ -51,15 +53,27 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(requests -> {
                     requests.requestMatchers(
                                     String.format("%s/users/register", apiPrefix),
-                                    String.format("%s/users/login", apiPrefix)
-
-                            )
+                                    String.format("%s/users/login", apiPrefix),
+                                    String.format("%s/users/refreshToken", apiPrefix))
                             .permitAll()
+
+                            //healcheck
+                            .requestMatchers(GET, "/api/v1/healthcheck/health").permitAll()
+//                            .requestMatchers(AntPathRequestMatcher.antMatcher("/api/v1/actuator/**")).permitAll() // Allow Actuator
+
+                            .requestMatchers(GET, "/api/v1/actuator/**").permitAll()
+
+                            //
+                            .requestMatchers(GET, String.format("%s/users", apiPrefix))
+                            .hasRole(Role.ADMIN)
+
                             .requestMatchers(GET, String.format("%s/roles**", apiPrefix))
                             .permitAll()
 
                             .requestMatchers(GET, String.format("%s/products", apiPrefix))
                             .permitAll()
+
+
 
                             .requestMatchers(GET, String.format("%s/products/**", apiPrefix))
                             .permitAll()
@@ -94,6 +108,9 @@ public class WebSecurityConfig {
 
                             .requestMatchers(GET,
                                     String.format("%s/orders/**", apiPrefix)).permitAll()
+
+                            .requestMatchers(GET,
+                                    String.format("%s/orders/get-orders-by-keyword", apiPrefix)).permitAll()
 
                             .requestMatchers(PUT,
                                     String.format("%s/orders/**", apiPrefix)).hasRole(Role.ADMIN)

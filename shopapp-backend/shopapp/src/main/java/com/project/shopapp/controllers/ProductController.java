@@ -193,8 +193,7 @@ public class ProductController {
             Product existingProduct = productService.getProductById(productId);
             if (existingProduct == null) {
                 return ResponseEntity.notFound().build(); // Trả về 404 nếu không tìm thấy sản phẩm
-            }
-            return ResponseEntity.ok(ProductResponse.fromProduct(existingProduct));
+            }return ResponseEntity.ok(ProductResponse.fromProduct(existingProduct));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage()); // Trả về 500 nếu có lỗi
         }

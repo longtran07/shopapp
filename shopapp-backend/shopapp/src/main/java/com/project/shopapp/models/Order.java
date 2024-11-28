@@ -1,5 +1,6 @@
 package com.project.shopapp.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
@@ -12,7 +13,6 @@ import java.util.List;
 @Builder
 @Entity
 @Table(name = "orders")
-@Data
 @Getter
 @Setter
 @AllArgsConstructor

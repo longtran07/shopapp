@@ -1,0 +1,105 @@
+/* Tạo khoảng cách và định dạng cho form */
+  
+  /* Định dạng cho tiêu đề */
+  .product-header {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  /* Định dạng các trường nhập liệu */
+  .form-label {
+    font-weight: bold;
+    width: 50%;
+  }
+  
+  .form-control {
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 14px;
+  }
+  
+  /* Cải thiện các trường lỗi */
+  .is-invalid {
+    border-color: #dc3545;
+  }
+  
+  .invalid-feedback {
+    color: #dc3545;
+    font-size: 12px;
+  }
+  
+  /* Định dạng ảnh sản phẩm */
+  .img-thumbnail {
+    border-radius: 8px;
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+  }
+  
+  .position-relative {
+    position: relative;
+  }
+  
+  .btn-danger {
+    background-color: #dc3545;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  
+  .btn-danger:hover {
+    background-color: #bd2130;
+  }
+  
+  /* Cải thiện các thông báo lỗi và thành công */
+  .alert {
+    border-radius: 5px;
+    padding: 10px;
+    margin-top: 15px;
+  }
+  
+  .alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+  }
+  
+  .alert-success {
+    background-color: #d4edda;
+    color: #155724;
+  }
+  
+  /* Định dạng cho các nút */
+  .btn-dark {
+    background-color: #343a40;
+    border: none;
+    padding: 10px 20px;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .btn-dark:hover {
+    background-color: #23272b;
+  }
+  
+  /* Các lớp cho các phần ảnh đã chọn và đã lưu */
+  .d-flex {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .me-2 {
+    margin-right: 10px;
+  }
+  
+  .mb-2 {
+    margin-bottom: 10px;
+  }
+  
+  .mt-3 {
+    margin-top: 20px;
+  }
+  

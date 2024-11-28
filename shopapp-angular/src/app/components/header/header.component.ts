@@ -21,6 +21,22 @@ export class HeaderComponent implements OnInit{
   isPopoverOpen = false;
   activeNavItem: number = 0;
 
+  notificationsVisible: boolean = false;
+  notifications = [
+    { message: 'Đơn hàng của bạn đã được xác nhận', time: '10 phút trước' },
+    { message: 'Bạn có một tin nhắn mới', time: '1 giờ trước' },
+    { message: 'Mã giảm giá của bạn sắp hết hạn', time: '1 ngày trước' }
+  ];
+
+  toggleNotifications(): void {
+    this.notificationsVisible = !this.notificationsVisible;
+  }
+
+  clearNotifications(): void {
+    this.notifications = [];
+  }
+
+
 
   togglePopover(event: Event): void {
     event.preventDefault();
@@ -35,6 +51,7 @@ export class HeaderComponent implements OnInit{
       this.userService.removeUserFromLocalStorage();
       this.tokenService.removeToken();
       this.userResponse = this.userService.getUserResponseFromLocalStorage();
+      this.router.navigate(['/']);
     }
     this.isPopoverOpen = false;
   }

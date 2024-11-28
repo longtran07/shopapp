@@ -1,56 +1,151 @@
-.top-bar {
-    background-color: #f8f9fa;
-    padding: 10px 0;
-  }
-  
-  .search-box {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  
-  .search-box .search-input {
-    width: 200px;
-    padding: 5px;
-    border-radius: 4px;
-  }
-  
-  .navbar {
-    padding: 0.5rem 1rem;
-    background-color: #a7b45e;
-  }
-  
-  .navbar-nav .nav-link {
-    color: #333;
-    font-weight: normal;
-  }
-  
-  .navbar-nav .nav-link.active {
-    font-weight: bold;
-    color: #333;
-  }
-  
-  .navbar-brand img {
-    max-width: 40px;
-  }
-  
-  .popover-list {
-    width: 200px; /* Kích thước cố định cho danh sách popover */
-    overflow: hidden;
+.popover-list {
+  width: 200px; /* Kích thước cố định cho danh sách popover */
+  overflow: hidden;
 }
 
 .popover-item {
-    display: block;
-    padding: 10px;
-    transition: transform 0.3s ease, font-weight 0.3s ease;
-    color: black; /* Màu đen mặc định */
-    text-decoration: none;
+  display: block;
+  padding: 10px;
+  transition: transform 0.3s ease, font-weight 0.3s ease;
+  color: black; /* Màu đen mặc định */
+  text-decoration: none;
 }
 
 .popover-item:hover {
-    transform: scale(1.05); /* Phóng to phần bên trong */
-    font-weight: bold;
-    background-color: #f0f0f0; /* Màu nền khi hover */
-    color: #000;
+  transform: scale(1.05); /* Phóng to phần bên trong */
+  font-weight: bold;
+  background-color: #f0f0f0; /* Màu nền khi hover */
+  color: #000;
 }
-  
+.navbar {
+  padding: 1rem;
+  background: linear-gradient(#ee4d2d, #ff7337); /* Tông màu xanh olive */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between; /* Tách hai nhóm ra */
+  align-items: center;
+}
+
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-nav {
+  display: flex;
+  gap: 15px; /* Khoảng cách giữa các phần tử trong navbar */
+}
+
+.navbar-nav .nav-link {
+  color: #ffffff; /* Màu chữ trắng */
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+.navbar-nav .nav-link.active,
+.navbar-nav .nav-link:hover {
+  color: #ffd700; /* Vàng sáng khi hover/active */
+}
+
+.icon {
+  padding-right: 5px;
+}
+
+/* Đảm bảo rằng popup và các phần tử khác hiển thị đúng */
+.notification-popup {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 300px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  max-height: 300px;
+  overflow-y: auto;
+  z-index: 1050; /* Đảm bảo thông báo luôn hiển thị trên các phần tử khác */
+}
+
+.btn-secondary {
+  margin-top: 10px;
+  width: 100%;
+}
+
+
+// notice 
+/* Đặt container của popup ngay bên dưới nút thông báo */
+.nav-item {
+  position: relative; /* Cần để căn chỉnh vị trí của popup */
+}
+
+.notification-popup {
+  position: absolute; /* Đặt popup ngay dưới nút thông báo */
+  top: 100%; /* Đặt popup ngay dưới nút thông báo */
+  left: 0; /* Căn trái với phần tử chứa */
+  width: 300px; /* Kích thước của popup */
+  background-color: #fff;
+  border: 1px solid #ddd;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  max-height: 300px;
+  overflow-y: auto;
+  z-index: 1050; /* Đảm bảo thông báo hiển thị ở trên các phần tử khác */
+}
+
+/* Button Clear All */
+.btn-secondary {
+  margin-top: 10px;
+  width: 100%;
+}
+
+/* Đảm bảo phần header không bị kéo dài */
+.navbar {
+  padding: 1rem;
+  background: linear-gradient(#ee4d2d, #ff7337);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar-center {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  overflow: hidden; /* Giấu phần tràn ngoài */
+  height: 40px; /* Chiều cao cố định cho ticker */
+  position: relative;
+}
+
+.news-ticker {
+  display: flex;
+  flex-direction: column;
+  animation: scroll-up 15s linear infinite; /* Hiệu ứng cuộn dọc */
+  position: absolute;
+}
+
+.news-item {
+  font-size: 18px; /* Tăng kích thước chữ */
+  font-weight: 500; /* Tăng độ đậm */
+  color: #f39c12;
+  text-align: center;
+  height: 40px; /* Chiều cao mỗi dòng */
+  line-height: 40px; /* Căn chỉnh giữa dòng */
+}
+
+/* Hiệu ứng scroll từng dòng với 5 giây mỗi dòng */
+@keyframes scroll-up {
+  0% {
+    transform: translateY(0); /* Hiển thị dòng đầu tiên */
+  }
+  33% {
+    transform: translateY(0); /* Giữ dòng đầu trong 5s */
+  }
+  66% {
+    transform: translateY(-40px); /* Chuyển sang dòng thứ hai */
+  }
+  100% {
+    transform: translateY(-80px); /* Chuyển sang dòng thứ ba */
+  }
+}
+

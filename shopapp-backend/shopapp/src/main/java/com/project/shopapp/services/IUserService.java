@@ -3,7 +3,10 @@ package com.project.shopapp.services;
 import com.project.shopapp.dtos.UpdateUserDTO;
 import com.project.shopapp.dtos.UserDTO;
 import com.project.shopapp.exceptions.DataNotFoundException;
+import com.project.shopapp.exceptions.InvalidPasswordException;
 import com.project.shopapp.models.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,4 +18,13 @@ public interface IUserService {
     User getUserDetailsFromToken(String token) throws Exception;
 
     User updateUser(Long userId, UpdateUserDTO updatedUserDTO) throws Exception;
+
+    User getUserDetailsFromRefreshToken(String token) throws Exception;
+
+    Page<User> findAll(String keyword, Pageable pageable) throws Exception;
+
+    void resetPassword(Long userId, String newPassword)
+            throws InvalidPasswordException, DataNotFoundException ;
+
+    public void blockOrEnable(Long userId, Boolean active) throws DataNotFoundException;
 }

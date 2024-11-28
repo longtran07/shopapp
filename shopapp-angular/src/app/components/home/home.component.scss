@@ -1,183 +1,214 @@
-@import '../../styles/shared-styles.scss';
 
-/* Header styles */
-
-.container{
-    margin-top: 20px;
-}
-
-.top-bar {
-    background-color: #b6b34e;
-    padding: 10px 0;
-}
-
+/* Search Box */
+/* Khung tìm kiếm */
 .search-box {
     display: flex;
     align-items: center;
-    gap: 10px;
-    justify-content: center;
-    margin-bottom: 20px;
+    justify-content: center; /* Căn giữa các phần tử con theo chiều ngang */
+    gap: 15px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 100%; /* Đảm bảo chiếm toàn bộ chiều rộng có sẵn */
+
 }
 
+
+
+/* Input tìm kiếm */
 .search-box .search-input {
-    border: none;
-    border-bottom: 2px solid #000;
+    width: 100%; /* Tăng chiều rộng của ô tìm kiếm */
+    padding: 12px 15px;
+    align-items: center;
+    border: 2px solid #ff7337; /* Viền đồng nhất với màu header */
+    border-radius: 25px; /* Bo tròn góc */
     outline: none;
-    color: #000; /* Màu chữ đen */
-    background-color: #fff; /* Nền trắng */
+    background-color: #fff;
+    transition: border-color 0.3s, box-shadow 0.3s ease;
+    font-size: 16px;
 }
 
-.search-input::placeholder {
+/* Hiệu ứng khi focus vào ô tìm kiếm */
+.search-box .search-input:focus {
+    border-color: #ee4d2d; /* Màu viền khi focus */
+    box-shadow: 0 0 8px rgba(255, 115, 55, 0.5); /* Bóng mờ khi focus */
+}
+
+/* Nút tìm kiếm */
+.search-box button {
+    padding: 12px 18px;
+    background-color: #ff7337;
+    border: none;
+    border-radius: 25px;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+/* Hiệu ứng khi hover vào nút tìm kiếm */
+.search-box button:hover {
+    background-color: #ee4d2d; /* Đổi màu khi hover */
+}
+
+/* Placeholder của ô tìm kiếm */
+.search-box .search-input::placeholder {
+    color: #aaa;
+    font-style: italic; /* Màu và kiểu dáng cho placeholder */
+}
+.row{
+    margin-right: 0 !important;
+}
+/* Sidebar */
+.sidebar-left, .sidebar-right {
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    // flex: 0 0 15%; /* Chỉnh chiều rộng cho sidebar (15% mỗi bên) */
+}
+
+.sidebar-left p, .sidebar-right p {
+    font-size: 16px;
     color: #333;
-}
-
-.search-box .product-category {
-    width: 200px;
-    background-color: transparent;
-    color: rgb(0, 0, 0);
-}
-
-.form-control::placeholder {
-    color: rgba(255, 255, 255, 0.5);
-}
-
-.navbar {
-    padding: 0.5rem 1rem;
-    background-color: #a7b45e;
-}
-
-.navbar-nav .nav-link {
-    color: #333;
-    font-weight: normal;
-}
-
-.navbar-nav .nav-link.active {
     font-weight: bold;
-    color: #333;
+    text-align: center;
 }
 
-.navbar-brand img {
-    max-width: 40px;
+/* Sidebar chính */
+.sidebar-left {
+    background-color: #f8f9fa; /* Màu nền sidebar nhạt */
+    padding: 15px;
+    border-right: 1px solid #ddd; /* Đường viền bên phải */
+    height: 100%; /* Chiều cao toàn khung */
+  }
+  
+  /* Danh sách nhóm sản phẩm */
+  .product-category-list {
+    padding: 0;
+    margin: 0;
+    list-style: none; /* Xóa dấu chấm đầu dòng */
+  }
+  
+  /* Item trong danh sách */
+  .product-category-list .list-group-item {
+    font-size: 16px;
+    padding: 12px 20px; /* Khoảng cách bên trong */
+    margin-bottom: 5px; /* Khoảng cách giữa các mục */
+    border: none; /* Xóa đường viền mặc định */
+    background-color: #fff; /* Màu nền mặc định */
+    color: #333; /* Màu chữ mặc định */
+    border-radius: 4px; /* Bo góc nhẹ */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Hiệu ứng hover */
+    cursor: pointer; /* Hiển thị con trỏ khi hover */
+  }
+  
+  /* Hiệu ứng hover */
+  .product-category-list .list-group-item:hover {
+    background-color: #ff7337; /* Màu nền khi hover */
+    color: #fff; /* Màu chữ khi hover */
+    transform: translateX(5px); /* Dịch nhẹ khi hover */
+  }
+
+  .product-category-list .list-group-item.active {
+    background-color: #ff7337; /* Màu cam khi active */
+    color: #fff; /* Màu chữ */
+    font-weight: bold; /* Chữ đậm */
+    transform: translateX(5px); /* Dịch nhẹ */
+    transition: all 0.3s ease; /* Hiệu ứng mượt */
+  }
+
+  
+  /* Responsive chỉnh lại */
+  @media (max-width: 768px) {
+    .sidebar-left {
+      height: auto; /* Không cố định chiều cao trên màn hình nhỏ */
+    }
+  }
+  
+
+/* Carousel */
+.carousel {
+    margin-bottom: 20px;
+    border-radius: 10px;
+    overflow: hidden; /* Bo góc hình ảnh */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
 
-
-.popover-list {
+/* Product Container */
+.product-container {
+    margin-bottom: 10px;
+    // flex: 1; /* Chiếm toàn bộ không gian còn lại */
     padding: 10px;
 }
 
-.popover-item {
-    display: block;
-    margin-bottom: 5px;
-    text-decoration: none;
-    color: #333;
-}
-
-.popover-item:hover {
-    background-color: #f0f0f0;
-    color: #007bff;
-}
-
-/* Intro section */
-.intro-section {
-    text-align: center;
-    color: rgb(0, 0, 0);
-    padding: 20px;
-}
-
-/* Product list styles */
+/* Hiệu ứng cho từng sản phẩm */
 .product-item {
-    border: 1px solid rgb(35, 39, 61);
-    border-radius: 20px;
-    padding: 20px;
-    margin-bottom: 20px;
-    width: 100%;
-    height: 550px; /* Cố định chiều cao lớn hơn cho product-item */
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    overflow: hidden;
+    padding: 15px;
+    margin-bottom: 15px;
+    text-align: left;
+    box-shadow: 0 4px 15px rgba(50, 50, 50, 0.2); /* Thêm bóng mờ khi hover */
+    transition: transform 0.3s, box-shadow 0.3s;
+    background: #fff;
+    height: 399px; /* Chiều cao cố định cho sản phẩm */
 }
 
+/* Hiệu ứng khi hover vào sản phẩm */
 .product-item:hover {
-    transform: scale(1.05); /* Phóng to một chút */
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Thêm bóng cho phần tử */
+    transform: translateY(-5px); /* Di chuyển lên một chút */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Thêm bóng mờ khi hover */
 }
 
+/* Ảnh sản phẩm */
 .product-image {
     width: 100%;
-    height: auto; /* Tự động điều chỉnh chiều cao dựa trên chiều rộng */
-    object-fit: cover;
-    margin-bottom: 10px;
-    aspect-ratio: 1; /* Đảm bảo ảnh có hình vuông */
-    border-radius: 8px;
+    height: 200px;
+    object-fit: cover; /* Đảm bảo ảnh hiển thị đẹp */
+    border-radius: 5px;
 }
 
+/* Tên sản phẩm */
 .product-name {
-    color: rgb(0, 0, 0);
-    font-size: 16px;
-    font-weight: bold;
-    margin-bottom: 8px;
-}
-
-.product-description {
-    color: rgb(0, 0, 0);
-    font-size: 14px;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    max-width: 100%;
-}
-
-.product-price {
-    color: rgb(0, 0, 0);
-    font-size: 16px;
-    font-weight: bold;
-    margin-top: 10px;
-}
-  
-  .search-box {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  
-  .search-box .search-input {
-    width: 200px;
-    padding: 5px;
-    border-radius: 4px;
-  }
-  
-  .navbar {
-    padding: 0.5rem 1rem;
-  }
-  
-  .navbar-nav .nav-link {
-    color: #000000;
-    font-weight: normal;
-  }
-  
-  .navbar-nav .nav-link.active {
+    font-size: 18px;
     font-weight: bold;
     color: #333;
-  }
-  
-  
-  .popover-list {
-    width: 200px; /* Kích thước cố định cho danh sách popover */
+    margin: 10px 0;
+}
+
+/* Mô tả sản phẩm */
+.product-description {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 8px;
+    white-space: nowrap;
     overflow: hidden;
+    text-overflow: ellipsis; /* Hiển thị mô tả ngắn gọn */
 }
 
-.popover-item {
-    display: block;
-    padding: 10px;
-    transition: transform 0.3s ease, font-weight 0.3s ease;
-    color: black; /* Màu đen mặc định */
-    text-decoration: none;
-}
-
-.popover-item:hover {
-    transform: scale(1.05); /* Phóng to phần bên trong */
+/* Giá sản phẩm */
+.product-price {
+    font-size: 16px;
     font-weight: bold;
-    background-color: #f0f0f0; /* Màu nền khi hover */
-    color: #000;
+    color: #556b2f; /* Màu xanh đậm cho giá */
 }
+
+/* Pagination */
+.pagination {
+    margin-top: 20px;
+}
+
+.page-item .page-link {
+    color: #ee4d2d;
+    border: 1px solid #ddd;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.page-item .page-link:hover,
+.page-item.active .page-link {
+    background-color:  #ee4d2d;
+    color: #fff;
+}
+
+.bodyhome {
+margin-top: 20px;
+}
+

@@ -1,10 +1,10 @@
-<div class="container">
+<div class="container-fluid">
   <form [formGroup]="addProductForm">
     <div class="row">
-      <h2 class="product-header">Add product</h2>
+      <h2 class="product-header">Thêm sản phẩm</h2>
 
       <!-- Tên sản phẩm -->
-      <div class="mb-3">
+      <div class="mb-3 col-md-6">
         <label for="name" class="form-label">Tên sản phẩm</label>
         <input type="text"
                formControlName="name"
@@ -19,7 +19,7 @@
       </div>
 
       <!-- Giá -->
-      <div class="mb-3">
+      <div class="mb-3 col-md-6">
         <label for="price" class="form-label">Giá</label>
         <input type="number"
                formControlName="price"
@@ -34,7 +34,7 @@
       </div>
 
       <!-- Mô tả -->
-      <div class="mb-3">
+      <div class="mb-3 col-md-6">
         <label for="description" class="form-label">Mô tả</label>
         <input type="text"
                class="form-control"
@@ -49,7 +49,7 @@
       </div>
 
       <!-- Danh mục -->
-      <div class="mb-3">
+      <div class="mb-3 col-md-6">
         <label for="category_id" class="form-label">Danh mục</label>
         <select id="category_id"
                 formControlName="category_id"
@@ -63,28 +63,31 @@
           Bạn cần chọn một danh mục.
         </div>
       </div>
-
     </div>
   </form>
+
+  <!-- Chọn ảnh -->
   <div class="form-group mt-4">
-    <label for="images">Chọn ảnh</label>
+    <label for="images" class="form-label">Chọn ảnh</label>
     <input id="images" type="file" (change)="onFileSelected($event)" multiple class="form-control" />
   </div>
 
-<!-- Hiển thị danh sách ảnh đã chọn, cần tạo pipe để xử lý  -->
-<div *ngIf="selectedFiles.length > 0" class="mt-3">
-  <h5>Ảnh đã chọn:</h5>
-  <div class="d-flex flex-wrap">
-    <div *ngFor="let file of selectedFiles; let i = index" class="position-relative me-2 mb-2">
-      <img [src]="file | safeUrl" alt="Selected image" class="img-thumbnail" style="width: 100px; height: 100px; object-fit: cover;" />
-      <button type="button" class="btn btn-danger btn-sm position-absolute top-0 end-0" (click)="removeFile(i)">Xóa</button>
+  <!-- Hiển thị danh sách ảnh đã chọn -->
+  <div *ngIf="selectedFiles.length > 0" class="mt-3">
+    <h5>Ảnh đã chọn:</h5>
+    <div class="d-flex flex-wrap">
+      <div *ngFor="let file of selectedFiles; let i = index" class="position-relative me-2 mb-2">
+        <img [src]="file | safeUrl" alt="Selected image" class="img-thumbnail" style="width: 100px; height: 100px; object-fit: cover;" />
+        <button type="button" class="btn btn-danger btn-sm position-absolute top-0 end-0" (click)="removeFile(i)">Xóa</button>
+      </div>
     </div>
   </div>
-</div>
 
+  <!-- Thông báo tải ảnh thành công hoặc lỗi -->
   <div *ngIf="uploadError" class="alert alert-danger mt-3">Lỗi khi tải lên ảnh. Vui lòng kiểm tra lại.</div>
   <div *ngIf="uploadSuccess" class="alert alert-success mt-3">Tải lên ảnh thành công!</div>
 
+  <!-- Nút thêm sản phẩm -->
   <div class="text-start mt-3">
     <button (click)="onCreateProduct()" class="btn btn-dark" type="button">Thêm sản phẩm</button>
   </div>

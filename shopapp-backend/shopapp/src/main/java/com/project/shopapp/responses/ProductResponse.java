@@ -29,6 +29,8 @@ public class ProductResponse extends BaseResponse {
     @JsonProperty("category_id")
     private Long categoryId;
 
+    private int totalPages;
+
     @JsonProperty("product_images")
     private List<ProductImageDTO> productImages = new ArrayList<>(); // Định nghĩa kiểu ở đây
 

@@ -1,13 +1,15 @@
+footer {
+    background-color: #b1b1b1; /* Màu nền tối */
+    color: #fff; /* Màu chữ sáng */
+}
+
+.footer-description p {
+    margin: 5px 0; /* Khoảng cách giữa các dòng text */
+}
+
 .footer-description {
-    color: rgb(173, 178, 203);
+    font-size: 14px;
 }
 
-.footer{
-    background-color: #a7b45e;
-    font-family: Arial, sans-serif;
-}
 
-.footer-description p{
-    color: #333; 
-    font-weight: bold; /* Đảm bảo chữ trong các thẻ <p> cũng in đậm */
-}
+

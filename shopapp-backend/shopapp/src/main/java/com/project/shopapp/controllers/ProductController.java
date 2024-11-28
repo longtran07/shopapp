@@ -1,5 +1,6 @@
 package com.project.shopapp.controllers;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.javafaker.Faker;
 import com.project.shopapp.components.LocalizationUtils;
@@ -11,6 +12,7 @@ import com.project.shopapp.responses.ProductListResponse;
 import com.project.shopapp.responses.ProductResponse;
 import com.project.shopapp.services.IProductService;
 import com.project.shopapp.services.ProductService;
+import com.project.shopapp.services.product.IProductRedisService;
 import com.project.shopapp.utils.MessageKeys;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -45,6 +47,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ProductController {
     private final IProductService productService;
+    private final IProductRedisService productRedisService;
     private final LocalizationUtils localizationUtils;
     private static final Logger logger= LoggerFactory.getLogger(ProductController.class);
 
@@ -167,22 +170,43 @@ public class ProductController {
             @RequestParam(defaultValue = "0",name = "category_id") Long categoryId,
             @RequestParam(defaultValue = "0")     int page,
             @RequestParam(defaultValue = "10")    int limit
-    ) {
+    ) throws JsonProcessingException {int totalPages = 0;
 
         // tạo pageable t thông tin trang và giới hạn
         PageRequest pageRequest=PageRequest.of(
                 page,limit,
                 Sort.by("id").ascending());
         logger.info(String.format("keyword = %s, category_id = %d",keyword,categoryId,page,limit));
-        Page<ProductResponse> productPage=productService.getAllProducts(keyword,categoryId,pageRequest);
-        // Lấy ra tổng số trang
-        int totalPages= productPage.getTotalPages();
-        List<ProductResponse>products=productPage.getContent();
+        List<ProductResponse> productResponses = productRedisService
+                .getAllProducts(keyword, categoryId, pageRequest);
+        if (productResponses!=null && !productResponses.isEmpty()) {
+            System.out.println("redis");
+            totalPages = productResponses.get(0).getTotalPages();
+        }
+        if(productResponses == null) {
+            Page<ProductResponse> productPage = productService
+                    .getAllProducts(keyword, categoryId, pageRequest);
+            // Lấy tổng số trang
+            totalPages = productPage.getTotalPages();
+            productResponses = productPage.getContent();
+            // Bổ sung totalPages vào các đối tượng ProductResponse
+            for (ProductResponse product : productResponses) {
+                product.setTotalPages(totalPages);
+            }
+            productRedisService.saveAllProducts(
+                    productResponses,
+                    keyword,
+                    categoryId,
+                    pageRequest
+            );
+        }
+
         return ResponseEntity.ok(ProductListResponse
                 .builder()
-                .products(products)
+                .products(productResponses)
                 .totalPages(totalPages)
                 .build());
+
     }
     //http://localhost:8088/api/v1/products/6
     @GetMapping("/{id}")
@@ -193,8 +217,7 @@ public class ProductController {
             Product existingProduct = productService.getProductById(productId);
             if (existingProduct == null) {
                 return ResponseEntity.notFound().build(); // Trả về 404 nếu không tìm thấy sản phẩm
-            }
-            return ResponseEntity.ok(ProductResponse.fromProduct(existingProduct));
+            }return ResponseEntity.ok(ProductResponse.fromProduct(existingProduct));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage()); // Trả về 500 nếu có lỗi
         }

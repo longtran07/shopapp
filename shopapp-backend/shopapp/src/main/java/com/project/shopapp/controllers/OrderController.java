@@ -2,6 +2,7 @@ package com.project.shopapp.controllers;
 
 import com.project.shopapp.components.LocalizationUtils;
 import com.project.shopapp.dtos.OrderDTO;
+import com.project.shopapp.exceptions.DataNotFoundException;
 import com.project.shopapp.models.Order;
 import com.project.shopapp.responses.OrderListResponse;
 import com.project.shopapp.responses.OrderResponse;
@@ -85,14 +86,13 @@ public class OrderController {
 
     }
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteOrder(@Valid @PathVariable("id") Long id){
+    public ResponseEntity<?> deleteOrder(@Valid @PathVariable("id") Long id) throws DataNotFoundException {
         // xoá mm => cập nhật trường active = flase
        orderService.deleteOrder(id);
         return ResponseEntity.ok(localizationUtils.getLocalizedMessage(MessageKeys.DELETE_ORDER_SUCCESSFULLY));
     }
 
     @GetMapping("/get-orders-by-keyword")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<OrderListResponse> getOrdersByKeyword(
             @RequestParam(defaultValue = "", required = false) String keyword,
             @RequestParam(defaultValue = "0") int page,

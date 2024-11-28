@@ -13,7 +13,7 @@ public interface IOrderService {
 
     Order getOrder(Long id);
     Order updateOrder(long id, OrderDTO orderDTO) throws Exception;
-    void deleteOrder(long id);
+    void deleteOrder(long id) throws DataNotFoundException;
     List<Order> findByUserId(Long userId);
     Page<Order> getOrdersByKeyword(String keyword, Pageable pageable);
 }

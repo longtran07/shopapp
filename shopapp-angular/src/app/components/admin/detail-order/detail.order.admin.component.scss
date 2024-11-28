@@ -1,0 +1,110 @@
+/* Tổng quan container */
+.container {
+    margin-top: 30px;
+    max-width: 1200px;
+    padding: 20px;
+  }
+  
+  /* Tiêu đề chính */
+  h1 {
+    color: #333;
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  /* Tiêu đề phụ */
+  h3 {
+    color: #444;
+    font-size: 1.8rem;
+    margin-top: 20px;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+  }
+  
+  /* Bảng chi tiết đơn hàng */
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  .table th,
+  .table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .table td {
+    background-color: #fafafa;
+  }
+  
+  /* Form chọn trạng thái đơn hàng */
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  #statusSelect {
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    width: 100%;
+    background-color: #f9f9f9;
+    transition: all 0.3s ease;
+  }
+  
+  #statusSelect:hover {
+    border-color: #007bff;
+  }
+  
+  /* Nút Save */
+  .btn-primary {
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 5px;
+    background-color: #007bff;
+    border: none;
+    color: #fff;
+    transition: all 0.3s ease;
+  }
+  
+  .btn-primary:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Responsive cho màn hình nhỏ */
+  @media (max-width: 768px) {
+    .container {
+      padding: 15px;
+    }
+  
+    h1 {
+      font-size: 2rem;
+    }
+  
+    h3 {
+      font-size: 1.5rem;
+    }
+  
+    .table th,
+    .table td {
+      font-size: 0.9rem;
+      padding: 8px;
+    }
+  
+    .btn-primary {
+      width: 100%;
+      margin-top: 20px;
+    }
+  }
+  

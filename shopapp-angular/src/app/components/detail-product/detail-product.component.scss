@@ -1,8 +1,9 @@
 @import '../../styles/shared-styles.scss';
-.intro-section {
-    color: rgb(0, 0, 0);
-    padding: 20px;
-    text-align: center;
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 30px 15px;
 }
 
 .product-image {
@@ -10,6 +11,7 @@
     width: 100%;
     object-fit: cover;
 }
+
 .thumbnail-container {
     display: flex;
     justify-content: space-between;
@@ -17,69 +19,194 @@
     margin-bottom: 20px;
 }
 
-.thumbnail-item {
-    width: 120px;
-    height: 120px;
-    margin-right: 5px;
-    border: 3px solid #cfcdcd;
-    /* Thêm khoảng cách ngang giữa các ảnh */
-}
-
 .thumbnail-item:last-child {
     margin-right: 0;
     /* Xóa khoảng cách ngang ở ảnh cuối cùng */
 }
 
-.thumbnail-item img {
+.thumbnail-item:first-child{
+    margin-left: 0;;
+}
+
+
+.thumbnail-item.active {
+    border: 3px solid #ff7337;
+}
+
+.thumbnail-item {
+    width: 120px;
+    height: 120px;
+    margin: 0 5px;
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.3s, border 0.3s;
+}
+
+.thumbnail-item:hover {
+    transform: scale(1.1); /* Phóng to khi hover */
+    border: 2px solid #ff7337; /* Đổi viền khi hover */
+}
+
+
+
+.thumbnail-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
 
-.thumbnail-item.active {
-    border: 3px solid black;
-}
+/* ============================== 
+   Chi tiết sản phẩm
+   ============================== */
+
 .product-details {
-    color: rgb(0, 0, 0);
     padding: 20px;
 }
 
+.product-details h2 {
+    font-size: 28px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.product-details p {
+    font-size: 16px;
+    color: #555;
+    line-height: 1.6;
+}
+
+.product-price {
+    font-size: 24px;
+    font-weight: bold;
+    color: #d9534f;
+    margin: 15px 0;
+}
+
+/* ============================== 
+   Nút hành động (Add to Cart, Buy Now)
+   ============================== */
+
 .product-actions {
-    display: flex;
-    justify-content: flex-start;
     margin-top: 20px;
 }
 
-.product-actions button {
-    margin-right: 10px;
-}
-.border-wrapper {
-    border: 1px solid rgb(0, 0, 0);      
-  }
-
-  .product-quantity {
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-      margin-top: 10px;
-  }
-
-  .product-quantity button {
-      background-color: transparent;
-      border: none;
-      color: rgb(0, 0, 0);
-      font-size: 16px;
-      cursor: pointer;
-  }
-  .product-quantity input {
-    background-color: transparent;
-    border: none;
-    color: rgb(0, 0, 0);
+.btn-action {
+    padding: 12px 20px;
+    border-radius: 50px;
     font-size: 16px;
-    text-align: center;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+/* Thêm vào giỏ hàng */
+.btn-primary.btn-action {
+    background-color: #0069d9;
+    border: 1px solid #0062cc;
+}
+
+.btn-primary.btn-action:hover {
+    background-color: #0056b3;
+    border-color: #004085;
+}
+
+/* Mua ngay */
+.btn-success.btn-action {
+    background-color: #28a745;
+    border: 1px solid #218838;
+}
+
+.btn-success.btn-action:hover {
+    background-color: #218838;
+    border-color: #1e7e34;
+}
+
+/* ============================== 
+   Số lượng sản phẩm
+   ============================== */
+
+.product-quantity {
+    display: flex;
+    align-items: center;
+    margin-top: 30px;
+}
+
+.border-wrapper {
+    display: flex;
+    align-items: center;
+    border: 2px solid #2d2d2d;
+    border-radius: 8px;
+    padding: 0 10px;
+}
+
+.quantity-btn {
+    background-color: #f8f9fa;
+    border: none;
+    padding: 10px 15px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.quantity-btn:hover {
+    background-color: #ff7337;
+}
+
+.quantity-input {
     width: 40px;
-    margin: 0 10px;
-  }
-  .product-quantity input:focus {
+    text-align: center;
+    font-size: 15px;
+    border: none;
+    background-color: transparent;
     outline: none;
-  }  
+}
+
+/* ============================== 
+   Phần Bình luận
+   ============================== */
+
+   .comments-section {
+    margin-top: 30px;
+    border-top: 2px solid #f2f2f2;
+    padding-top: 20px;
+}
+
+.comment {
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.comment small {
+    font-size: 12px;
+    color: #777;
+}
+
+.add-comment textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    resize: none;
+    min-height: 80px;
+}
+
+.add-comment button {
+    padding: 10px 20px;
+    background-color: #0069d9;
+    border: none;
+    color: white;
+    border-radius: 25px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.add-comment button:hover {
+    background-color: #0056b3;
+}
